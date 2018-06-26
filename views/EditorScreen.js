@@ -1,38 +1,17 @@
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+/**
+ * This is Editor Screen class
+ * @author : Hoang Duy
+ */
+import React, { Component } from "react";
+import { Text, View } from "react-native";
+import { styles } from "../styles/Styles.js";
 
 export class EditorScreen extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          This is edit screen!
-        </Text>
+        <Text style={styles.welcome}>This is edit screen!</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
