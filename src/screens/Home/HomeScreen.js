@@ -3,7 +3,7 @@
  * @author : Hoang Duy
  */
 import React, { Component } from "react";
-import { StatusBar } from "react-native";
+import { Platform } from "react-native";
 import {
   Container,
   Header,
@@ -16,28 +16,21 @@ import {
   Title
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
+import { listAllCustomer, getAllCustomer } from "../../api/Api.js";
 
 export default class HomeScreen extends Component {
   render() {
+    getAllCustomer();
+    var data = listAllCustomer;
     return (
       <Container>
         <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.openDrawer()}
-            >
-              <Icon name="menu" />
-            </Button>
-          </Left>
+          <Left />
           <Body>
-            <Title>Trang chu</Title>
+            <Title>Trang chủ</Title>
           </Body>
           <Right />
         </Header>
-        <Button onPress={() => this.props.navigation.navigate("Customer")}>
-          <Text>Click me!</Text>
-        </Button>
       </Container>
     );
   }

@@ -3,28 +3,26 @@
  * @author Hoang Duy
  */
 import React, { Component } from "react";
+import { StatusBar, Button } from "react-native";
 import {
 	Container,
 	Header,
 	Left,
 	Right,
 	Body,
-	Button,
+	//Button,
 	Text,
 	Icon,
 	Title
 } from "native-base";
+import { SafeAreaView } from "react-navigation";
 import { styles } from "../../styles/Styles.js";
 
 export default class CustomerHomeScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
 		header: (
 			<Header>
-				<Left>
-					<Button transparent onPress={() => navigation.goBack()}>
-						<Icon name="arrow-back" />
-					</Button>
-				</Left>
+				<Left />
 				<Body>
 					<Title>List Customer</Title>
 				</Body>
@@ -33,6 +31,15 @@ export default class CustomerHomeScreen extends Component {
 		)
 	});
 	render() {
-		return <Container />;
+		return (
+			<SafeAreaView style={[styles.container, { backgroundColor: "#ecf0f1" }]}>
+				<StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
+				<Text style={styles.paragraph}>Dark Screen</Text>
+				<Button
+					title="Next screen"
+					onPress={() => this.props.navigation.navigate("Home")}
+				/>
+			</SafeAreaView>
+		);
 	}
 }

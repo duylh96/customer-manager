@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>533621734337-e4go1c5asj2t68jli1i0f2plqis0q86p.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.533621734337-e4go1c5asj2t68jli1i0f2plqis0q86p</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC5c5J6_IVP5HcLGXYYyylCyAecGZ612e0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>533621734337</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hd.CustomerManagerApp</string>
+	<key>PROJECT_ID</key>
+	<string>qlmaydo</string>
+	<key>STORAGE_BUCKET</key>
+	<string>qlmaydo.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:533621734337:ios:3e95891d1c91b1f7</string>
+	<key>DATABASE_URL</key>
+	<string>https://qlmaydo.firebaseio.com</string>
+</dict>
+</plist>

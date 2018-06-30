@@ -11,10 +11,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F5FCFF"
   },
-  headerContainer: {
+  sidebarContainer: {
     flex: 1,
-    margin: 0,
-    padding: 0,
-    backgroundColor: "#2400FF"
+    marginTop: 25
   }
 });
