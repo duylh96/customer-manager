@@ -16,26 +16,26 @@ export const styles = StyleSheet.create({
 
   //App's Header style
   appHeader: {
-    height: moderateScale(85)
+    height: verticalScale(85)
   },
   appHeaderFont: {
-    fontSize: moderateScale(20)
+    fontSize: verticalScale(20)
   },
   appHeaderIcon: {
-    fontSize: moderateScale(32)
+    fontSize: verticalScale(25)
   },
 
   //Sidebar style
   sideBarCoverImage: {
-    height: verticalScale(175),
+    height: verticalScale(200),
     alignSelf: "stretch",
     justifyContent: "flex-end",
     alignItems: "flex-start"
   },
   sideBarLogoImage: {
-    height: verticalScale(80),
-    width: moderateScale(70),
-    marginBottom: scale(5)
+    height: verticalScale(65),
+    width: verticalScale(65),
+    marginBottom: verticalScale(5)
   },
   sidebarOptionItem: {
     height: verticalScale(65)
@@ -49,6 +49,9 @@ export const styles = StyleSheet.create({
     height: verticalScale(84)
   },
   customerItemFont: {
-    fontSize: moderateScale(42)
+    fontSize: verticalScale(42)
+  },
+  customerItemIcon: {
+    fontSize: verticalScale(26)
   }
 });

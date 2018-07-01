@@ -59,7 +59,6 @@ export default class Sidebar extends Component {
           style={styles.sideBarCoverImage}
         >
           <Image
-            square
             style={styles.sideBarLogoImage}
             source={require("./img/logo.png")}
           />

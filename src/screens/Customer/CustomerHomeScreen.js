@@ -64,9 +64,9 @@ export default class CustomerHomeScreen extends Component {
 
   goToDetail(data) {
     if (data.key !== null) {
-      this.props.navigation.navigate("CustomerAdd", { id: data.key });
+      this.props.navigation.navigate("Detail", { id: data.key });
     }
-    this.props.navigation.navigate("CustomerAdd", { id: data.name });
+    this.props.navigation.navigate("Detail", { id: data.name });
   }
 
   fetchData = () => {
@@ -108,7 +108,7 @@ export default class CustomerHomeScreen extends Component {
                   <Button transparent onPress={() => this.goToDetail(data)}>
                     <Icon
                       name="arrow-forward"
-                      style={styles.customerItemFont}
+                      style={styles.customerItemIcon}
                     />
                   </Button>
                 </Right>
@@ -116,12 +116,12 @@ export default class CustomerHomeScreen extends Component {
             )}
             renderLeftHiddenRow={data => (
               <Button full success onPress={() => alert("Gọi " + data.name)}>
-                <Icon active name="ios-call" />
+                <Icon active name="ios-call" style={styles.customerItemIcon} />
               </Button>
             )}
             renderRightHiddenRow={data => (
               <Button full danger onPress={() => this.deleteRow(data)}>
-                <Icon active name="trash" />
+                <Icon active name="trash" style={styles.customerItemIcon} />
               </Button>
             )}
             leftOpenValue={scale(80)}
