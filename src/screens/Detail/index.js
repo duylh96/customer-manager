@@ -19,7 +19,7 @@ export default (DetailNavigator = TabNavigator(
               active={props.navigationState.index === 0}
               onPress={() => props.navigation.navigate("Detail")}
             >
-              <Icon name="bowtie" />
+              <Icon name="ios-card-outline" />
               <Text>Chi tiết</Text>
             </Button>
             <Button
@@ -27,7 +27,7 @@ export default (DetailNavigator = TabNavigator(
               active={props.navigationState.index === 1}
               onPress={() => props.navigation.navigate("History")}
             >
-              <Icon name="briefcase" />
+              <Icon name="ios-list-box-outline" />
               <Text>Lịch sử đặt đồ</Text>
             </Button>
           </FooterTab>

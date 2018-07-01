@@ -64,9 +64,9 @@ export default class CustomerHomeScreen extends Component {
 
   goToDetail(data) {
     if (data.key !== null) {
-      this.props.navigation.navigate("Detail", { id: data.key });
+      this.props.navigation.navigate("Detail", { hasKey: true, val: data });
     }
-    this.props.navigation.navigate("Detail", { id: data.name });
+    this.props.navigation.navigate("Detail", { hasKey: false, val: data });
   }
 
   fetchData = () => {
