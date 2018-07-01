@@ -1,13 +1,15 @@
-import firebase from "react-native-firebase";
+function compareCustomerName(a, b) {
+	let n1 = a.name
+		.trim()
+		.substring(0, 1)
+		.toLowerCase();
 
-const ref = firebase.database().ref("customer");
+	let n2 = b.name
+		.trim()
+		.substring(0, 1)
+		.toLowerCase();
 
-let listAllCustomer = [];
-
-function getAllCustomer() {
-	ref.once("value").then(function(snapshot) {
-		listAllCustomer = snapshot.val();
-	});
+	return n1.localeCompare(n2);
 }
 
-export { listAllCustomer, getAllCustomer };
+export { compareCustomerName };
