@@ -22,6 +22,10 @@ import { styles } from "../../styles/Styles.js";
 import { scale, moderateScale, verticalScale } from "../../utils/scale.js";
 import firebase from "react-native-firebase";
 import { compareCustomerName } from "../../api/API.js";
+import {
+  getListCustomerCached,
+  setListCustomerCached
+} from "../../utils/global.js";
 
 export default class CustomerHomeScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -54,12 +58,21 @@ export default class CustomerHomeScreen extends Component {
       refreshing: false,
       listAllCustomer: []
     };
-    this.fetchData();
+  }
+
+  componentDidMount() {
+    // use cached list if possible
+
+    if (getListCustomerCached().length === 0) {
+      this.fetchData();
+    } else {
+      this.setState({ listAllCustomer: getListCustomerCached() });
+    }
   }
 
   onRefresh = () => {
     this.setState({ refreshing: true });
-    this.fetchData();
+    this.fetchData(this.state.refreshing);
   };
 
   goToDetail(data) {
@@ -75,6 +88,10 @@ export default class CustomerHomeScreen extends Component {
       function(snapshot) {
         let data = Object.values(snapshot.val());
         data.sort(compareCustomerName);
+
+        //update the cache list for later use
+        setListCustomerCached(data.slice(0));
+
         this.setState({ listAllCustomer: data });
         this.setState({ refreshing: false });
       }.bind(this)
