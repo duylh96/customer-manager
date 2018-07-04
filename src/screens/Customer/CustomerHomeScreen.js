@@ -22,10 +22,7 @@ import { styles } from "../../styles/Styles.js";
 import { scale, moderateScale, verticalScale } from "../../utils/scale.js";
 import firebase from "react-native-firebase";
 import { compareCustomerName } from "../../api/API.js";
-import {
-  getListCustomerCached,
-  setListCustomerCached
-} from "../../utils/global.js";
+import { AsyncStorage } from "react-native";
 
 export default class CustomerHomeScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -58,21 +55,42 @@ export default class CustomerHomeScreen extends Component {
       refreshing: false,
       listAllCustomer: []
     };
+    this.storeData = this.storeData.bind(this);
+    this.retrieveData = this.retrieveData.bind(this);
   }
 
   componentDidMount() {
     // use cached list if possible
+    this.retrieveData();
+  }
 
-    if (getListCustomerCached().length === 0) {
-      this.fetchData();
-    } else {
-      this.setState({ listAllCustomer: getListCustomerCached() });
+  async storeData() {
+    try {
+      await AsyncStorage.setItem(
+        "@cachedListCustomer:key",
+        JSON.stringify(this.state.listAllCustomer)
+      );
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async retrieveData() {
+    try {
+      const value = await AsyncStorage.getItem("@cachedListCustomer:key");
+      if (value !== null && value !== "[]") {
+        this.setState({ listAllCustomer: JSON.parse(value) });
+      } else {
+        this.fetchData();
+      }
+    } catch (error) {
+      alert(error);
     }
   }
 
   onRefresh = () => {
     this.setState({ refreshing: true });
-    this.fetchData(this.state.refreshing);
+    this.fetchData();
   };
 
   goToDetail(data) {
@@ -88,12 +106,11 @@ export default class CustomerHomeScreen extends Component {
       function(snapshot) {
         let data = Object.values(snapshot.val());
         data.sort(compareCustomerName);
-
-        //update the cache list for later use
-        setListCustomerCached(data.slice(0));
-
         this.setState({ listAllCustomer: data });
         this.setState({ refreshing: false });
+
+        //update the cache list for later use
+        this.storeData(data.slice(0));
       }.bind(this)
     );
   };
