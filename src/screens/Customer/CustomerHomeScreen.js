@@ -22,6 +22,7 @@ import { styles } from "../../styles/Styles.js";
 import { scale, moderateScale, verticalScale } from "../../utils/scale.js";
 import firebase from "react-native-firebase";
 import { compareCustomerName } from "../../api/API.js";
+import { listCustomerKey } from "../../utils/global.js";
 import { AsyncStorage } from "react-native";
 
 export default class CustomerHomeScreen extends Component {
@@ -67,7 +68,7 @@ export default class CustomerHomeScreen extends Component {
   async storeData() {
     try {
       await AsyncStorage.setItem(
-        "@cachedListCustomer:key",
+        listCustomerKey,
         JSON.stringify(this.state.listAllCustomer)
       );
     } catch (error) {
@@ -77,7 +78,7 @@ export default class CustomerHomeScreen extends Component {
 
   async retrieveData() {
     try {
-      const value = await AsyncStorage.getItem("@cachedListCustomer:key");
+      const value = await AsyncStorage.getItem(listCustomerKey);
       if (value !== null && value !== "[]") {
         this.setState({ listAllCustomer: JSON.parse(value) });
       } else {

@@ -5,27 +5,55 @@
 import React, { Component } from "react";
 import {
   Container,
+  Content,
+  Form,
+  Label,
   Header,
   Left,
   Right,
   Body,
   Button,
+  Item,
+  Input,
   Text,
+  Textarea,
   Icon,
   Title
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
+import {
+  listCustomerKey,
+  customerDescriptionTemplate
+} from "../../utils/global.js";
 
 export default class CustomerAddScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: "create"
+      mode: "create",
+      customer: new Object(),
+      nameSuccess: "",
+      phoneSuccess: ""
     };
   }
+
   componentDidMount() {
     this.setState({ mode: this.props.navigation.getParam("mode", "create") });
   }
+
+  showInputIcon(success) {
+    switch (success) {
+      case "success":
+        return <Icon name="checkmark-circle" />;
+        break;
+      case "error":
+        return <Icon name="close-circle" />;
+        break;
+      default:
+        break;
+    }
+  }
+
   render() {
     const { navigation } = this.props;
     const data = navigation.getParam("val", "");
@@ -54,6 +82,37 @@ export default class CustomerAddScreen extends Component {
             </Button>
           </Right>
         </Header>
+        <Content>
+          <Form>
+            <Item floatingLabel>
+              <Label>Tên khách hàng</Label>
+              <Input
+                style={styles.inputItemFont}
+                value={this.state.mode === "edit" ? data.name : ""}
+              />
+              {this.showInputIcon(this.state.nameSuccess)}
+            </Item>
+            <Item floatingLabel last>
+              <Label>Số điện thoại</Label>
+              <Input
+                style={styles.inputItemFont}
+                value={this.state.mode === "edit" ? data.phone : ""}
+              />
+              {this.showInputIcon(this.state.phoneSuccess)}
+            </Item>
+            <Textarea
+              style={styles.inputTextAreaFont}
+              rowSpan={25}
+              bordered
+              placeholder="Số đo chi tiết"
+              value={
+                this.state.mode === "create"
+                  ? customerDescriptionTemplate
+                  : data.description
+              }
+            />
+          </Form>
+        </Content>
       </Container>
     );
   }

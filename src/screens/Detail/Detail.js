@@ -61,7 +61,12 @@ export default class Detail extends Component {
             position="bottomRight"
             onPress={() => this.setState({ active: !this.state.active })}
           >
-            <Icon type="MaterialCommunityIcons" name="chevron-double-up" />
+            <Icon
+              type="MaterialCommunityIcons"
+              name={
+                this.state.active ? "chevron-double-down" : "chevron-double-up"
+              }
+            />
             <Button style={{ backgroundColor: "#34A34F" }}>
               <Icon name="logo-whatsapp" />
             </Button>

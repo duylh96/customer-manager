@@ -58,5 +58,13 @@ export const styles = StyleSheet.create({
   //Detail style
   detailItemFont: {
     fontSize: verticalScale(26)
+  },
+
+  //Add/Edit Customer style
+  inputItemFont: {
+    fontSize: verticalScale(20)
+  },
+  inputTextAreaFont: {
+    fontSize: verticalScale(25)
   }
 });
