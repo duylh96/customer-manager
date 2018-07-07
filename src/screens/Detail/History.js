@@ -26,12 +26,12 @@ export default class History extends Component {
     return (
       <Header style={styles.appHeader}>
         <Left>
-          <Button transparent onPress={() => navigation.navigate("Customer")}>
+          <Button transparent onPress={() => navigation.goBack("")}>
             <Icon name="ios-arrow-back" style={styles.appHeaderIcon} />
           </Button>
         </Left>
         <Body>
-          <Title style={styles.appHeaderFont}>History</Title>
+          <Title style={styles.appHeaderFont}>{data.name}</Title>
         </Body>
         <Right />
       </Header>

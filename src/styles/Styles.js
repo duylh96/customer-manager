@@ -53,5 +53,10 @@ export const styles = StyleSheet.create({
   },
   customerItemIcon: {
     fontSize: verticalScale(26)
+  },
+
+  //Detail style
+  detailItemFont: {
+    fontSize: verticalScale(26)
   }
 });

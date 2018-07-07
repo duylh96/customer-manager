@@ -20,7 +20,7 @@ export default (DetailNavigator = TabNavigator(
               onPress={() => props.navigation.navigate("Detail")}
             >
               <Icon name="ios-card-outline" />
-              <Text>Chi tiết</Text>
+              <Text>Số đo chi tiết</Text>
             </Button>
             <Button
               vertical

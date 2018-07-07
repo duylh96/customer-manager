@@ -17,22 +17,36 @@ import {
 import { styles } from "../../styles/Styles.js";
 
 export default class CustomerAddScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <Header>
-        <Left>
-          <Button transparent onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" />
-          </Button>
-        </Left>
-        <Body>
-          <Title>Add new customer</Title>
-        </Body>
-        <Right />
-      </Header>
-    )
-  });
+  constructor(props) {
+    super(props);
+    this.state = {
+      mode: "create"
+    };
+  }
+  componentDidMount() {
+    this.setState({ mode: this.props.navigation.getParam("mode", "create") });
+  }
   render() {
-    return <Container />;
+    const { navigation } = this.props;
+    const data = navigation.getParam("val", "");
+    return (
+      <Container>
+        <Header style={styles.appHeader}>
+          <Left>
+            <Button transparent onPress={() => navigation.goBack()}>
+              <Icon name="arrow-back" style={styles.appHeaderIcon} />
+            </Button>
+          </Left>
+          <Body>
+            <Title style={styles.appHeaderFont}>
+              {this.state.mode === "create"
+                ? "Thêm khách hàng mới"
+                : "Chỉnh sửa thông tin"}
+            </Title>
+          </Body>
+          <Right />
+        </Header>
+      </Container>
+    );
   }
 }
