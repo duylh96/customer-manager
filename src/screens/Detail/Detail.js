@@ -61,12 +61,12 @@ export default class Detail extends Component {
             position="bottomRight"
             onPress={() => this.setState({ active: !this.state.active })}
           >
-            <Icon name="share" />
+            <Icon type="MaterialCommunityIcons" name="chevron-double-up" />
             <Button style={{ backgroundColor: "#34A34F" }}>
               <Icon name="logo-whatsapp" />
             </Button>
             <Button style={{ backgroundColor: "#3B5998" }}>
-              <Icon name="mail" />
+              <Icon type="MaterialIcons" name="message" />
             </Button>
             <Button
               style={{ backgroundColor: "#DD5144" }}
@@ -74,7 +74,7 @@ export default class Detail extends Component {
                 navigation.navigate("CustomerAdd", { val: data, mode: "edit" })
               }
             >
-              <Icon name="hammer" />
+              <Icon type="FontAwesome" name="edit" />
             </Button>
           </Fab>
         </View>

@@ -19,7 +19,7 @@ export default (DetailNavigator = TabNavigator(
               active={props.navigationState.index === 0}
               onPress={() => props.navigation.navigate("Detail")}
             >
-              <Icon name="ios-card-outline" />
+              <Icon type="MaterialCommunityIcons" name="account-card-details" />
               <Text>Số đo chi tiết</Text>
             </Button>
             <Button
@@ -27,7 +27,7 @@ export default (DetailNavigator = TabNavigator(
               active={props.navigationState.index === 1}
               onPress={() => props.navigation.navigate("History")}
             >
-              <Icon name="ios-list-box-outline" />
+              <Icon type="MaterialIcons" name="history" />
               <Text>Lịch sử đặt đồ</Text>
             </Button>
           </FooterTab>

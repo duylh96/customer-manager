@@ -44,7 +44,15 @@ export default class CustomerAddScreen extends Component {
                 : "Chỉnh sửa thông tin"}
             </Title>
           </Body>
-          <Right />
+          <Right>
+            <Button transparent>
+              <Icon
+                type="MaterialIcons"
+                name="save"
+                style={styles.appHeaderIcon}
+              />
+            </Button>
+          </Right>
         </Header>
       </Container>
     );
