@@ -22,20 +22,28 @@ import {
   ListItem
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
-import firebase from "react-native-firebase";
-import { AsyncStorage } from "react-native";
 
 export default class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false
+      active: false,
+      data: {}
     };
   }
+
+  componentDidMount() {
+    let { navigation } = this.props;
+    let val = navigation.getParam("val", "");
+    this.setState({ data: val });
+  }
+
+  refreshData(newData) {
+    this.setState({ data: newData });
+  }
+
   render() {
     const { navigation } = this.props;
-    const data = navigation.getParam("val", "");
-    const haskey = navigation.getParam("hasKey", false);
     return (
       <Container>
         <Header style={styles.appHeader}>
@@ -45,13 +53,15 @@ export default class Detail extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={styles.appHeaderFont}>{data.name}</Title>
+            <Title style={styles.appHeaderFont}>{this.state.data.name}</Title>
           </Body>
           <Right />
         </Header>
         <View style={{ flex: 1 }}>
           <Content padder maximumZoomScale={5} minimumZoomScale={1}>
-            <Text style={styles.detailItemFont}>{data.description}</Text>
+            <Text style={styles.detailItemFont}>
+              {this.state.data.description}
+            </Text>
           </Content>
           <Fab
             active={this.state.active}
@@ -76,7 +86,11 @@ export default class Detail extends Component {
             <Button
               style={{ backgroundColor: "#DD5144" }}
               onPress={() =>
-                navigation.navigate("CustomerAdd", { val: data, mode: "edit" })
+                navigation.navigate("CustomerAdd", {
+                  val: this.state.data,
+                  mode: "edit",
+                  refreshDetail: this.refreshData.bind(this)
+                })
               }
             >
               <Icon type="FontAwesome" name="edit" />
