@@ -28,7 +28,8 @@ export default class Detail extends Component {
     super(props);
     this.state = {
       active: false,
-      data: {}
+      data: {},
+      needRefresh: false
     };
   }
 
@@ -39,7 +40,7 @@ export default class Detail extends Component {
   }
 
   refreshData(newData) {
-    this.setState({ data: newData });
+    this.setState({ data: newData, needRefresh: true });
   }
 
   render() {
@@ -48,7 +49,15 @@ export default class Detail extends Component {
       <Container>
         <Header style={styles.appHeader}>
           <Left>
-            <Button transparent onPress={() => navigation.goBack("")}>
+            <Button
+              transparent
+              onPress={() => {
+                if (this.state.needRefresh) {
+                  navigation.state.params.refresh();
+                }
+                navigation.goBack("");
+              }}
+            >
               <Icon name="ios-arrow-back" style={styles.appHeaderIcon} />
             </Button>
           </Left>
@@ -89,7 +98,7 @@ export default class Detail extends Component {
                 navigation.navigate("CustomerAdd", {
                   val: this.state.data,
                   mode: "edit",
-                  refreshDetail: this.refreshData.bind(this)
+                  refresh: this.refreshData.bind(this)
                 })
               }
             >

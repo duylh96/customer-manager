@@ -264,7 +264,7 @@ export default class CustomerAddScreen extends Component {
                   customer.name = this.state.name;
                   customer.phone = this.state.phone;
                   customer.description = this.state.description;
-                  navigation.state.params.refreshDetail(customer);
+                  navigation.state.params.refresh(customer);
                 }
                 navigation.goBack();
               }}

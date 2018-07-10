@@ -26,29 +26,6 @@ import { listCustomerKey } from "../../utils/global.js";
 import { AsyncStorage } from "react-native";
 
 export default class CustomerHomeScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <Header style={styles.appHeader}>
-        <Left>
-          <Button transparent onPress={() => navigation.openDrawer()}>
-            <Icon name="ios-menu" style={styles.appHeaderIcon} />
-          </Button>
-        </Left>
-        <Body>
-          <Title style={styles.appHeaderFont}>Khách hàng</Title>
-        </Body>
-        <Right>
-          <Button
-            transparent
-            onPress={() => navigation.navigate("CustomerAdd")}
-          >
-            <Icon name="md-person-add" style={styles.appHeaderIcon} />
-          </Button>
-        </Right>
-      </Header>
-    )
-  });
-
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -94,11 +71,23 @@ export default class CustomerHomeScreen extends Component {
     this.fetchData();
   };
 
+  refreshData(data) {
+    this.fetchData();
+  }
+
   goToDetail(data) {
     if (data.key !== null) {
-      this.props.navigation.navigate("Detail", { hasKey: true, val: data });
+      this.props.navigation.navigate("Detail", {
+        hasKey: true,
+        val: data,
+        refresh: this.refreshData.bind(this)
+      });
     }
-    this.props.navigation.navigate("Detail", { hasKey: false, val: data });
+    this.props.navigation.navigate("Detail", {
+      hasKey: false,
+      val: data,
+      refresh: this.refreshData.bind(this)
+    });
   }
 
   fetchData = () => {
@@ -122,8 +111,31 @@ export default class CustomerHomeScreen extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
     return (
       <Container>
+        <Header style={styles.appHeader}>
+          <Left>
+            <Button transparent onPress={() => navigation.openDrawer()}>
+              <Icon name="ios-menu" style={styles.appHeaderIcon} />
+            </Button>
+          </Left>
+          <Body>
+            <Title style={styles.appHeaderFont}>Khách hàng</Title>
+          </Body>
+          <Right>
+            <Button
+              transparent
+              onPress={() =>
+                navigation.navigate("CustomerAdd", {
+                  refresh: this.refreshData.bind(this)
+                })
+              }
+            >
+              <Icon name="md-person-add" style={styles.appHeaderIcon} />
+            </Button>
+          </Right>
+        </Header>
         <Content
           refreshControl={
             <RefreshControl

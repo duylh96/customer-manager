@@ -4,7 +4,12 @@ import CustomerAddScreen from "./CustomerAddScreen.js";
 import DetailNavigator from "../Detail/index.js";
 import { StackNavigator } from "react-navigation";
 export default (CustomerNav = StackNavigator({
-	CustomerHome: { screen: CustomerHomeScreen },
+	CustomerHome: {
+		screen: CustomerHomeScreen,
+		navigationOptions: {
+			header: null
+		}
+	},
 	CustomerAdd: {
 		screen: CustomerAddScreen,
 		navigationOptions: {
