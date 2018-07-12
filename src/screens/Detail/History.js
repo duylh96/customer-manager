@@ -28,7 +28,8 @@ export default class History extends Component {
     super(props);
 
     this.state = {
-      data: []
+      data: [],
+      id: ""
     };
   }
 
@@ -36,6 +37,7 @@ export default class History extends Component {
     let { navigation } = this.props;
     let val = navigation.getParam("val", "");
     let key = val.key === undefined ? val.name : val.key;
+    this.setState({ id: key });
     this.fetchData(key);
   }
 
@@ -46,10 +48,21 @@ export default class History extends Component {
       .once("value")
       .then(
         function(snapshot) {
-          let list = Object.values(snapshot.val());
-          this.setState({ data: list });
+          if (snapshot.val() !== null) {
+            let list = Object.values(snapshot.val());
+            this.setState({ data: list });
+          }
         }.bind(this)
       );
+  }
+
+  parseDate(s) {
+    let y = s.substring(0, 4);
+    let m = s.substring(4, 6);
+    let d = s.substring(6, s.length);
+    let dateString = y + "-" + m + "-" + d;
+    let result = new Date(dateString);
+    return result.toDateString();
   }
 
   render() {
@@ -65,7 +78,23 @@ export default class History extends Component {
           <Body>
             <Title style={styles.appHeaderFont}>Lịch sử đặt đồ</Title>
           </Body>
-          <Right />
+          <Right>
+            <Button
+              transparent
+              onPress={() =>
+                navigation.navigate("HistoryAdd", {
+                  id: this.state.id,
+                  mode: "create"
+                })
+              }
+            >
+              <Icon
+                type="MaterialIcons"
+                name="playlist-add"
+                style={styles.appHeaderIcon}
+              />
+            </Button>
+          </Right>
         </Header>
         <Content padder>
           <FlatList
@@ -73,31 +102,31 @@ export default class History extends Component {
             renderItem={({ item }) => (
               <Card>
                 <CardItem header bordered>
-                  <Text>{item.date}</Text>
+                  <Text style={styles.dateItemFont}>
+                    {this.parseDate(item.date)}
+                  </Text>
                 </CardItem>
                 <CardItem bordered>
                   <Body>
-                    <Text>{item.description}</Text>
+                    <Text style={styles.descriptionItemFont}>
+                      {item.description}
+                    </Text>
                   </Body>
                 </CardItem>
                 <CardItem footer bordered>
                   <Left>
-                    <Text>Tiền : 0 VNĐ</Text>
+                    <Text style={styles.moneyItemFont}>Tiền : 0,000 VNĐ</Text>
                   </Left>
-                  <Body>
-                    <Button transparent>
+                  <Right style={styles.buttonContainer}>
+                    <Button full bordered rounded info>
                       <Icon active type="FontAwesome" name="edit" />
-                      <Text>Chỉnh sửa</Text>
                     </Button>
-                  </Body>
-                  <Right>
-                    <Button transparent>
+                    <Button full bordered rounded danger>
                       <Icon
                         active
                         type="MaterialCommunityIcons"
                         name="delete-forever"
                       />
-                      <Text>Xoá</Text>
                     </Button>
                   </Right>
                 </CardItem>

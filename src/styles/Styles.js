@@ -66,5 +66,24 @@ export const styles = StyleSheet.create({
   },
   inputTextAreaFont: {
     fontSize: verticalScale(25)
+  },
+
+  //History style
+  dateItemFont: {
+    color: "red",
+    fontSize: verticalScale(20)
+  },
+  descriptionItemFont: {
+    fontSize: verticalScale(25)
+  },
+  moneyItemFont: {
+    fontSize: verticalScale(15),
+    fontStyle: "italic",
+    fontWeight: "400"
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
