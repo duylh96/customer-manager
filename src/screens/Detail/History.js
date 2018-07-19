@@ -22,6 +22,7 @@ import {
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
 import firebase from "react-native-firebase";
+import { parseStringToDate } from "../../api/API.js";
 
 export default class History extends Component {
   constructor(props) {
@@ -57,12 +58,15 @@ export default class History extends Component {
   }
 
   parseDate(s) {
-    let y = s.substring(0, 4);
-    let m = s.substring(4, 6);
-    let d = s.substring(6, s.length);
-    let dateString = y + "-" + m + "-" + d;
-    let result = new Date(dateString);
-    return result.toDateString();
+    let result = parseStringToDate(s);
+    let options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    };
+    options.timeZoneName = "short";
+    return result.toLocaleDateString("vi-VN", options);
   }
 
   render() {

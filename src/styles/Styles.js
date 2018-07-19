@@ -85,5 +85,18 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+
+  //History add style
+  datePickerStyle: {
+    fontSize: verticalScale(22)
+  },
+  datePickerTextStyle: {
+    fontSize: verticalScale(22),
+    color: "green"
+  },
+  historyAddTextStyle: {
+    fontSize: verticalScale(22),
+    fontWeight: "400"
   }
 });

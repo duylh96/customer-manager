@@ -2,7 +2,6 @@
  * This class define history add/edit screen
  */
 import React, { Component } from "react";
-import { FlatList } from "react-native";
 import {
   Container,
   Content,
@@ -13,12 +12,13 @@ import {
   Button,
   DatePicker,
   Text,
+  Textarea,
   Icon,
   Card,
   CardItem,
   Title,
-  List,
-  ListItem
+  Form,
+  Item
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
 import firebase from "react-native-firebase";
@@ -70,20 +70,34 @@ export default class HistoryAddScreen extends Component {
             </Button>
           </Right>
         </Header>
-        <Content>
-          <DatePicker
-            defaultDate={new Date()}
-            locale={"vi"}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={"fade"}
-            androidMode={"default"}
-            placeHolderText="Chọn ngày"
-            textStyle={{ color: "green" }}
-            placeHolderTextStyle={{ color: "#d3d3d3" }}
-            onDateChange={this.setDate}
-          />
-          <Text>Date: {this.state.chosenDate.toString().substr(4, 12)}</Text>
+        <Content padder>
+          <Item>
+            <Left>
+              <Title style={styles.historyAddTextStyle}>Ngày hẹn : </Title>
+            </Left>
+            <Body>
+              <DatePicker
+                defaultDate={new Date()}
+                locale={"vi"}
+                timeZoneOffsetInMinutes={undefined}
+                modalTransparent={false}
+                animationType={"fade"}
+                androidMode={"default"}
+                placeHolderText="Chọn ngày hẹn"
+                textStyle={styles.datePickerTextStyle}
+                placeHolderTextStyle={styles.datePickerStyle}
+                onDateChange={this.setDate}
+              />
+            </Body>
+          </Item>
+          <Form>
+            <Textarea
+              style={styles.inputTextAreaFont}
+              rowSpan={8}
+              bordered
+              placeholder="Thông tin đặt đồ"
+            />
+          </Form>
         </Content>
       </Container>
     );
