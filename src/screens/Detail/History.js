@@ -22,13 +22,14 @@ import {
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
 import firebase from "react-native-firebase";
-import { parseStringToDate } from "../../api/API.js";
+import { parseStringToDate, parseDate } from "../../api/API.js";
 
 export default class History extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      customerInfo,
       data: [],
       id: ""
     };
@@ -38,7 +39,7 @@ export default class History extends Component {
     let { navigation } = this.props;
     let val = navigation.getParam("val", "");
     let key = val.key === undefined ? val.name : val.key;
-    this.setState({ id: key });
+    this.setState({ id: key, customerInfo: val });
     this.fetchData(key);
   }
 
@@ -55,18 +56,6 @@ export default class History extends Component {
           }
         }.bind(this)
       );
-  }
-
-  parseDate(s) {
-    let result = parseStringToDate(s);
-    let options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    };
-    options.timeZoneName = "short";
-    return result.toLocaleDateString("vi-VN", options);
   }
 
   render() {
@@ -87,7 +76,7 @@ export default class History extends Component {
               transparent
               onPress={() =>
                 navigation.navigate("HistoryAdd", {
-                  id: this.state.id,
+                  ci: this.state.customerInfo,
                   mode: "create"
                 })
               }
@@ -107,7 +96,7 @@ export default class History extends Component {
               <Card>
                 <CardItem header bordered>
                   <Text style={styles.dateItemFont}>
-                    {this.parseDate(item.date)}
+                    {parseDate(item.date)}
                   </Text>
                 </CardItem>
                 <CardItem bordered>
@@ -122,7 +111,19 @@ export default class History extends Component {
                     <Text style={styles.moneyItemFont}>Tiền : 0,000 VNĐ</Text>
                   </Left>
                   <Right style={styles.buttonContainer}>
-                    <Button full bordered rounded info>
+                    <Button
+                      full
+                      bordered
+                      rounded
+                      info
+                      onPress={() =>
+                        navigation.navigate("HistoryAdd", {
+                          ci: this.state.customerInfo,
+                          val: item,
+                          mode: "edit"
+                        })
+                      }
+                    >
                       <Icon active type="FontAwesome" name="edit" />
                     </Button>
                     <Button full bordered rounded danger>

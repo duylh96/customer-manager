@@ -22,6 +22,13 @@ import {
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
 import firebase from "react-native-firebase";
+import { m1, m2 } from "../../utils/message.js";
+import {
+  parseDateToString,
+  compareDateWithNow,
+  showError,
+  prettifyStringDate
+} from "../../api/API.js";
 
 export default class HistoryAddScreen extends Component {
   constructor(props) {
@@ -29,20 +36,90 @@ export default class HistoryAddScreen extends Component {
 
     this.state = {
       mode: "",
-      chosenDate: new Date()
+      chosenDate: "",
+      shortDescription: "",
+      customerInfo: "",
+      needRefresh: false
     };
     this.setDate = this.setDate.bind(this);
   }
 
   setDate(newDate) {
-    this.setState({ chosenDate: newDate });
+    if (this.state.mode !== "edit") {
+      this.setState({ chosenDate: parseDateToString(newDate) });
+    }
   }
 
   componentDidMount() {
     let { navigation } = this.props;
-    this.setState({ mode: navigation.getParam("mode", "") });
-    let val = navigation.getParam("id", "");
-    alert(val);
+
+    let m = navigation.getParam("mode", "create");
+    let ci = navigation.getParam("ci", {});
+
+    this.setState({ mode: m, customerInfo: ci });
+
+    if (m === "edit") {
+      let data = navigation.getParam("val", {});
+      this.setState({
+        chosenDate: data.date,
+        shortDescription: data.description
+      });
+    }
+  }
+
+  createSchedule() {
+    if (this.checkValid()) {
+      //ref to schedule table
+      let ref = firebase.database().ref("schedule");
+
+      //assign data to new object
+      let schedule = new Object();
+
+      schedule.name = this.state.ci.name;
+      schedule.date = this.state.chosenDate;
+      schedule.description = this.state.shortDescription;
+
+      //add new node to schedule table
+      let key = ci.key === undefined ? ci.name : ci.key;
+      key = this.state.chosenDate + key;
+      ref.child(key).set(schedule);
+
+      this.setState({ needRefresh: true, shortDescription: "" });
+
+      alert("Thêm thành công!");
+    }
+  }
+
+  updateSchedule() {
+    if (this.checkValid()) {
+      //ref to schedule table
+      let ref = firebase.database().ref("schedule");
+
+      //update table
+      let key = ci.key === undefined ? ci.name : ci.key;
+      key = this.state.chosenDate + key;
+      ref.child(key).update({ description: this.state.shortDescription });
+
+      this.setState({ needRefresh: true });
+
+      alert("Cập nhật thành công!");
+    }
+  }
+
+  checkValid() {
+    if (
+      this.state.chosenDate.length === 0 ||
+      this.state.shortDescription.length === 0
+    ) {
+      showError(m1);
+      return false;
+    }
+    if (compareDateWithNow(this.state.chosenDate) <= 0) {
+      showError(m2);
+      return false;
+    }
+
+    return true;
   }
 
   render() {
@@ -61,7 +138,14 @@ export default class HistoryAddScreen extends Component {
             </Title>
           </Body>
           <Right>
-            <Button transparent onPress={() => navigation.goBack("")}>
+            <Button
+              transparent
+              onPress={() =>
+                this.state.mode === "create"
+                  ? this.createSchedule()
+                  : this.updateSchedule()
+              }
+            >
               <Icon
                 type="FontAwesome"
                 name="save"
@@ -83,7 +167,11 @@ export default class HistoryAddScreen extends Component {
                 modalTransparent={false}
                 animationType={"fade"}
                 androidMode={"default"}
-                placeHolderText="Chọn ngày hẹn"
+                placeHolderText={
+                  this.state.chosenDate === ""
+                    ? "Chọn ngày hẹn : "
+                    : prettifyStringDate(this.state.chosenDate)
+                }
                 textStyle={styles.datePickerTextStyle}
                 placeHolderTextStyle={styles.datePickerStyle}
                 onDateChange={this.setDate}
@@ -93,9 +181,11 @@ export default class HistoryAddScreen extends Component {
           <Form>
             <Textarea
               style={styles.inputTextAreaFont}
+              value={this.state.shortDescription}
               rowSpan={8}
               bordered
               placeholder="Thông tin đặt đồ"
+              onChangeText={text => this.setState({ shortDescription: text })}
             />
           </Form>
         </Content>

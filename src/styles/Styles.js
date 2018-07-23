@@ -89,7 +89,8 @@ export const styles = StyleSheet.create({
 
   //History add style
   datePickerStyle: {
-    fontSize: verticalScale(22)
+    fontSize: verticalScale(22),
+    color: "blue"
   },
   datePickerTextStyle: {
     fontSize: verticalScale(22),
@@ -98,5 +99,27 @@ export const styles = StyleSheet.create({
   historyAddTextStyle: {
     fontSize: verticalScale(22),
     fontWeight: "400"
+  },
+
+  //Home style
+  itemTitle: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingRight: verticalScale(5),
+    paddingLeft: verticalScale(2),
+    paddingTop: verticalScale(7),
+    paddingBottom: verticalScale(7)
+  },
+  itemTitleFont: {
+    flex: 1,
+    fontSize: verticalScale(25),
+    flexWrap: "wrap",
+    marginRight: verticalScale(4)
+  },
+  itemContentFont: {
+    fontSize: verticalScale(25),
+    fontWeight: "bold"
   }
 });

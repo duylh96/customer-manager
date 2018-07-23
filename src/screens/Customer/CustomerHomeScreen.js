@@ -3,7 +3,7 @@
  * @author Hoang Duy
  */
 import React, { Component } from "react";
-import { RefreshControl, ListView, Alert } from "react-native";
+import { RefreshControl, ListView, Alert, AsyncStorage } from "react-native";
 import {
   Container,
   Content,
@@ -23,7 +23,6 @@ import { scale, moderateScale, verticalScale } from "../../utils/scale.js";
 import firebase from "react-native-firebase";
 import { compareCustomerName } from "../../api/API.js";
 import { listCustomerKey } from "../../utils/global.js";
-import { AsyncStorage } from "react-native";
 
 export default class CustomerHomeScreen extends Component {
   constructor(props) {

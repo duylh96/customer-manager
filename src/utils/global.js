@@ -1,4 +1,5 @@
 const listCustomerKey = "@cachedListCustomer:key";
+const listScheduleKey = "@cachedListSchedule:key";
 
 const customerDescriptionTemplate =
   "Hạ eo : \t\n" +
@@ -18,4 +19,4 @@ const customerDescriptionTemplate =
   "Ống : \t\n" +
   "\t\n";
 
-export { listCustomerKey, customerDescriptionTemplate };
+export { listCustomerKey, customerDescriptionTemplate, listScheduleKey };
