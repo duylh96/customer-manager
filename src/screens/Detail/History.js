@@ -29,7 +29,7 @@ export default class History extends Component {
     super(props);
 
     this.state = {
-      customerInfo,
+      customerInfo: {},
       data: [],
       id: ""
     };

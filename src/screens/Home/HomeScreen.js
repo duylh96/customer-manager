@@ -82,7 +82,7 @@ export default class HomeScreen extends Component {
       function(snapshot) {
         let data = snapshot.val();
 
-        let keys = this.getAllKeys(data);
+        let keys = this.getAllKeys(Object.values(data));
         let displayList = this.generateDisplayList(keys, data);
 
         this.setState({ listAllScheduleDisplay: displayList });
@@ -96,22 +96,22 @@ export default class HomeScreen extends Component {
 
   getAllKeys(list) {
     let result = [];
-    for (var k in list) {
+    for (let i = 0; i < list.length; i++) {
       let exist = false;
 
-      for (var i in result) {
-        if (result[i] === k.substring(0, 8)) {
+      for (let j = 0; j < result.length; j++) {
+        if (result[j] === list[i].date) {
           exist = true;
           break;
         }
       }
 
       if (!exist) {
-        result.push(k.substring(0, 8));
+        result.push(list[i].date);
       }
     }
 
-    return result;
+    return result.sort();
   }
 
   generateDisplayList(keys, data) {

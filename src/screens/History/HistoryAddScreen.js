@@ -38,7 +38,7 @@ export default class HistoryAddScreen extends Component {
       mode: "",
       chosenDate: "",
       shortDescription: "",
-      customerInfo: "",
+      ci: "",
       needRefresh: false
     };
     this.setDate = this.setDate.bind(this);
@@ -54,9 +54,9 @@ export default class HistoryAddScreen extends Component {
     let { navigation } = this.props;
 
     let m = navigation.getParam("mode", "create");
-    let ci = navigation.getParam("ci", {});
+    let customerInfo = navigation.getParam("ci", {});
 
-    this.setState({ mode: m, customerInfo: ci });
+    this.setState({ mode: m, ci: customerInfo });
 
     if (m === "edit") {
       let data = navigation.getParam("val", {});
@@ -69,9 +69,6 @@ export default class HistoryAddScreen extends Component {
 
   createSchedule() {
     if (this.checkValid()) {
-      //ref to schedule table
-      let ref = firebase.database().ref("schedule");
-
       //assign data to new object
       let schedule = new Object();
 
@@ -79,10 +76,29 @@ export default class HistoryAddScreen extends Component {
       schedule.date = this.state.chosenDate;
       schedule.description = this.state.shortDescription;
 
-      //add new node to schedule table
-      let key = ci.key === undefined ? ci.name : ci.key;
-      key = this.state.chosenDate + key;
-      ref.child(key).set(schedule);
+      let key =
+        this.state.ci.key === undefined
+          ? this.state.ci.name
+          : this.state.ci.key;
+
+      /**
+       * create schedule
+       */
+      //ref to schedule table
+      let ref = firebase.database().ref("schedule");
+
+      let sKey = schedule.date + key;
+      ref.child(sKey).set(schedule);
+
+      /**
+       * create history
+       */
+      //ref to history table
+      ref = firebase.database().ref("history");
+      ref
+        .child(key)
+        .child(schedule.date)
+        .set(schedule);
 
       this.setState({ needRefresh: true, shortDescription: "" });
 
@@ -96,9 +112,19 @@ export default class HistoryAddScreen extends Component {
       let ref = firebase.database().ref("schedule");
 
       //update table
-      let key = ci.key === undefined ? ci.name : ci.key;
-      key = this.state.chosenDate + key;
-      ref.child(key).update({ description: this.state.shortDescription });
+      let key =
+        this.state.ci.key === undefined
+          ? this.state.ci.name
+          : this.state.ci.key;
+      let sKey = this.state.chosenDate + key;
+      ref.child(sKey).update({ description: this.state.shortDescription });
+
+      //ref to history table
+      ref = firebase.database().ref("history");
+      ref
+        .child(key)
+        .child(this.state.chosenDate)
+        .update({ description: this.state.shortDescription });
 
       this.setState({ needRefresh: true });
 
