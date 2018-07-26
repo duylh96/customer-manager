@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Alert } from "react-native";
 import {
   Container,
   Content,
@@ -23,6 +23,7 @@ import {
 import { styles } from "../../styles/Styles.js";
 import firebase from "react-native-firebase";
 import { parseStringToDate, parseDate } from "../../api/API.js";
+import { m3 } from "../../utils/message.js";
 
 export default class History extends Component {
   constructor(props) {
@@ -33,6 +34,8 @@ export default class History extends Component {
       data: [],
       id: ""
     };
+
+    this.deleteData = this.deleteData.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +61,55 @@ export default class History extends Component {
       );
   }
 
+  showDialog(title, message, c, item) {
+    Alert.alert(
+      title,
+      message,
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          style: "cancel",
+          onPress: () => this.deleteData(this.state.id, item)
+        }
+      ],
+      { cancelable: c }
+    );
+  }
+
+  deleteData(key, item) {
+    /**
+     * delete schedule
+     */
+    //ref to schedule table
+    let ref = firebase.database().ref("schedule");
+
+    let sKey = item.date + key;
+    ref.child(sKey).remove();
+
+    /**
+     * delete history
+     */
+    //ref to history table
+    ref = firebase.database().ref("history");
+    ref
+      .child(key)
+      .child(item.date)
+      .remove();
+
+    //refresh data
+    this.setState({ data: [] });
+    this.refreshData(key);
+    alert("Xoá thành công!");
+  }
+
+  refreshData(key) {
+    this.fetchData(key);
+  }
+
   render() {
     const { navigation } = this.props;
     return (
@@ -77,7 +129,8 @@ export default class History extends Component {
               onPress={() =>
                 navigation.navigate("HistoryAdd", {
                   ci: this.state.customerInfo,
-                  mode: "create"
+                  mode: "create",
+                  refresh: this.refreshData.bind(this)
                 })
               }
             >
@@ -120,13 +173,20 @@ export default class History extends Component {
                         navigation.navigate("HistoryAdd", {
                           ci: this.state.customerInfo,
                           val: item,
-                          mode: "edit"
+                          mode: "edit",
+                          refresh: this.refreshData.bind(this)
                         })
                       }
                     >
                       <Icon active type="FontAwesome" name="edit" />
                     </Button>
-                    <Button full bordered rounded danger>
+                    <Button
+                      full
+                      bordered
+                      rounded
+                      danger
+                      onPress={() => this.showDialog("", m3, true, item)}
+                    >
                       <Icon
                         active
                         type="MaterialCommunityIcons"

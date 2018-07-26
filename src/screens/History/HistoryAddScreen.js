@@ -154,7 +154,19 @@ export default class HistoryAddScreen extends Component {
       <Container>
         <Header style={styles.appHeader}>
           <Left>
-            <Button transparent onPress={() => navigation.goBack("")}>
+            <Button
+              transparent
+              onPress={() => {
+                if (this.state.needRefresh) {
+                  let key =
+                    this.state.ci.key === undefined
+                      ? this.state.ci.name
+                      : this.state.ci.key;
+                  navigation.state.params.refresh(key);
+                }
+                navigation.goBack("");
+              }}
+            >
               <Icon name="ios-arrow-back" style={styles.appHeaderIcon} />
             </Button>
           </Left>
