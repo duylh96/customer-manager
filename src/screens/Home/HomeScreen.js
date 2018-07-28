@@ -3,7 +3,7 @@
  * @author : Hoang Duy
  */
 import React, { Component } from "react";
-import { RefreshControl, AsyncStorage, View } from "react-native";
+import { RefreshControl, AsyncStorage, View, Alert } from "react-native";
 import {
   Container,
   Content,
@@ -22,8 +22,9 @@ import {
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
 import firebase from "react-native-firebase";
-import { listScheduleKey } from "../../utils/global.js";
+import { listScheduleKey, listCustomerKey } from "../../utils/global.js";
 import { parseDate } from "../../api/API.js";
+import { m3 } from "../../utils/message.js";
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -31,16 +32,19 @@ export default class HomeScreen extends Component {
 
     this.state = {
       refreshing: false,
+      listAllCustomer: [],
       listAllScheduleDisplay: []
     };
     this.storeData = this.storeData.bind(this);
     this.retrieveData = this.retrieveData.bind(this);
     this.renderHeaderItem = this.renderHeaderItem.bind(this);
+    this.retrieveAllCustomerData = this.retrieveAllCustomerData.bind(this);
   }
 
   componentDidMount() {
     // use cached list if possible
     this.retrieveData();
+    this.retrieveAllCustomerData();
   }
 
   async storeData() {
@@ -49,6 +53,17 @@ export default class HomeScreen extends Component {
         listScheduleKey,
         JSON.stringify(this.state.listAllScheduleDisplay)
       );
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async retrieveAllCustomerData() {
+    try {
+      const value = await AsyncStorage.getItem(listCustomerKey);
+      if (value !== null && value !== "[]") {
+        this.setState({ listAllCustomer: JSON.parse(value) });
+      }
     } catch (error) {
       alert(error);
     }
@@ -123,7 +138,8 @@ export default class HomeScreen extends Component {
       obj.content = [];
       for (var j in data) {
         if (j.substring(0, 8) === obj.title) {
-          obj.content.push(data[j].name);
+          let id = j.substring(8, j.length);
+          obj.content.push({ name: data[j].name, id: id, date: keys[i] });
         }
       }
 
@@ -167,6 +183,56 @@ export default class HomeScreen extends Component {
     );
   }
 
+  showDialog(title, message, c, item) {
+    Alert.alert(
+      title,
+      message,
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          style: "cancel",
+          onPress: () => this.deleteData(item)
+        }
+      ],
+      { cancelable: c }
+    );
+  }
+
+  deleteData(item) {
+    /**
+     * delete schedule
+     */
+    //ref to schedule table
+    let ref = firebase.database().ref("schedule");
+    let sKey = item.date + item.id;
+    ref.child(sKey).remove();
+
+    //refresh data
+    this.setState({ listAllScheduleDisplay: [] });
+    this.onRefresh();
+    alert("Xoá thành công!");
+  }
+
+  goToDetail(item) {
+    let data = this.state.listAllCustomer.find(
+      x => (x.key === undefined ? x.name === item.id : x.key === item.id)
+    );
+    if (data.key !== null) {
+      this.props.navigation.navigate("Detail", {
+        hasKey: true,
+        val: data
+      });
+    }
+    this.props.navigation.navigate("Detail", {
+      hasKey: false,
+      val: data
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -194,11 +260,15 @@ export default class HomeScreen extends Component {
               <List
                 dataArray={content}
                 renderRow={item => (
-                  <ListItem>
+                  <ListItem button onPress={() => this.goToDetail(item)}>
                     <Body>
-                      <Text style={styles.itemContentFont}>{item}</Text>
+                      <Text style={styles.itemContentFont}>{item.name}</Text>
                     </Body>
-                    <Button danger transparent>
+                    <Button
+                      danger
+                      transparent
+                      onPress={() => this.showDialog("", m3, true, item)}
+                    >
                       <Icon
                         type="MaterialCommunityIcons"
                         name="calendar-remove"

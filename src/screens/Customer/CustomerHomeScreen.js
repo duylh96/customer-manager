@@ -23,6 +23,7 @@ import { scale, moderateScale, verticalScale } from "../../utils/scale.js";
 import firebase from "react-native-firebase";
 import { compareCustomerName } from "../../api/API.js";
 import { listCustomerKey } from "../../utils/global.js";
+import { m3 } from "../../utils/message.js";
 
 export default class CustomerHomeScreen extends Component {
   constructor(props) {
@@ -104,9 +105,38 @@ export default class CustomerHomeScreen extends Component {
     );
   };
 
-  deleteRow(data) {
-    //simulate delete
-    Alert.alert(data.name);
+  showDialog(title, message, c, item) {
+    Alert.alert(
+      title,
+      message,
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          style: "cancel",
+          onPress: () => this.deleteData(item)
+        }
+      ],
+      { cancelable: c }
+    );
+  }
+
+  deleteData(item) {
+    /**
+     * delete customer
+     */
+    //ref to customer table
+    let ref = firebase.database().ref("customer");
+    let key = item.key === undefined ? item.name : item.key;
+    ref.child(key).remove();
+
+    //refresh data
+    this.setState({ listAllCustomer: [] });
+    this.onRefresh();
+    alert("Xoá thành công!");
   }
 
   render() {
@@ -166,7 +196,11 @@ export default class CustomerHomeScreen extends Component {
               </Button>
             )}
             renderRightHiddenRow={data => (
-              <Button full danger onPress={() => this.deleteRow(data)}>
+              <Button
+                full
+                danger
+                onPress={() => this.showDialog("", m3, true, data)}
+              >
                 <Icon active name="trash" style={styles.customerItemIcon} />
               </Button>
             )}
