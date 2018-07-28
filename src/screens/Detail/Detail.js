@@ -22,6 +22,7 @@ import {
   ListItem
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
+import call from "react-native-phone-call";
 
 export default class Detail extends Component {
   constructor(props) {
@@ -41,6 +42,17 @@ export default class Detail extends Component {
 
   refreshData(newData) {
     this.setState({ data: newData, needRefresh: true });
+  }
+
+  call(data) {
+    if (data.phone.length >= 10 && data.phone !== "0") {
+      const args = {
+        number: data.phone, // String value with the number to call
+        prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
+      };
+
+      call(args).catch(console.error);
+    }
   }
 
   render() {
@@ -86,7 +98,10 @@ export default class Detail extends Component {
                 this.state.active ? "chevron-double-down" : "chevron-double-up"
               }
             />
-            <Button style={{ backgroundColor: "#34A34F" }}>
+            <Button
+              style={{ backgroundColor: "#34A34F" }}
+              onPress={() => this.call(this.state.data)}
+            >
               <Icon name="logo-whatsapp" />
             </Button>
             <Button style={{ backgroundColor: "#3B5998" }}>

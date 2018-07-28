@@ -299,7 +299,7 @@ export default class CustomerAddScreen extends Component {
             )}
             <Textarea
               style={styles.inputTextAreaFont}
-              rowSpan={18}
+              rowSpan={22}
               bordered
               placeholder="Số đo chi tiết"
               value={this.state.description}

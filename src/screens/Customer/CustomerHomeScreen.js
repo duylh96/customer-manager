@@ -24,6 +24,7 @@ import firebase from "react-native-firebase";
 import { compareCustomerName } from "../../api/API.js";
 import { listCustomerKey } from "../../utils/global.js";
 import { m3 } from "../../utils/message.js";
+import call from "react-native-phone-call";
 
 export default class CustomerHomeScreen extends Component {
   constructor(props) {
@@ -139,6 +140,17 @@ export default class CustomerHomeScreen extends Component {
     alert("Xoá thành công!");
   }
 
+  call(data) {
+    if (data.phone.length >= 10 && data.phone !== "0") {
+      const args = {
+        number: data.phone, // String value with the number to call
+        prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
+      };
+
+      call(args).catch(console.error);
+    }
+  }
+
   render() {
     const { navigation } = this.props;
     return (
@@ -191,7 +203,7 @@ export default class CustomerHomeScreen extends Component {
               </ListItem>
             )}
             renderLeftHiddenRow={data => (
-              <Button full success onPress={() => alert("Gọi " + data.name)}>
+              <Button full success onPress={() => this.call(data)}>
                 <Icon active name="ios-call" style={styles.customerItemIcon} />
               </Button>
             )}

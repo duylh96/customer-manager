@@ -2,7 +2,7 @@
  * This file define all styles use in App
  * @author : Hoang Duy
  */
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { scale, moderateScale, verticalScale } from "../utils/scale.js";
 
 export const styles = StyleSheet.create({
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
 
   //List Customer style
   customerItem: {
-    height: verticalScale(84)
+    height: Platform.OS === "ios" ? verticalScale(84) : verticalScale(168)
   },
   customerItemFont: {
     fontSize: verticalScale(42)
