@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
 
   //App's Header style
   appHeader: {
-    height: verticalScale(85)
+    height: Platform.OS === "ios" ? verticalScale(85) : moderateScale(60)
   },
   appHeaderFont: {
     fontSize: verticalScale(20)
@@ -41,18 +41,18 @@ export const styles = StyleSheet.create({
     height: verticalScale(65)
   },
   sidebarOptionItemFont: {
-    fontSize: verticalScale(22)
+    fontSize: Platform.OS === "ios" ? verticalScale(22) : moderateScale(16)
   },
 
   //List Customer style
   customerItem: {
-    height: Platform.OS === "ios" ? verticalScale(84) : verticalScale(168)
+    height: Platform.OS === "ios" ? verticalScale(84) : moderateScale(72)
   },
   customerItemFont: {
-    fontSize: verticalScale(42)
+    fontSize: Platform.OS === "ios" ? verticalScale(42) : moderateScale(25)
   },
   customerItemIcon: {
-    fontSize: verticalScale(26)
+    fontSize: Platform.OS === "ios" ? verticalScale(26) : moderateScale(28)
   },
 
   //Detail style
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
 
   //Add/Edit Customer style
   inputItemFont: {
-    fontSize: verticalScale(20)
+    fontSize: Platform.OS === "ios" ? verticalScale(20) : moderateScale(15)
   },
   inputTextAreaFont: {
     fontSize: verticalScale(25)
@@ -114,12 +114,12 @@ export const styles = StyleSheet.create({
   },
   itemTitleFont: {
     flex: 1,
-    fontSize: verticalScale(25),
+    fontSize: Platform.OS === "ios" ? verticalScale(25) : moderateScale(30),
     flexWrap: "wrap",
-    marginRight: verticalScale(4)
+    marginRight: Platform.OS === "ios" ? verticalScale(4) : moderateScale(4)
   },
   itemContentFont: {
-    fontSize: verticalScale(25),
+    fontSize: Platform.OS === "ios" ? verticalScale(25) : moderateScale(25),
     fontWeight: "bold"
   }
 });

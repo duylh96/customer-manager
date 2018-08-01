@@ -23,7 +23,11 @@ import {
 import { styles } from "../../styles/Styles.js";
 import firebase from "react-native-firebase";
 import { listScheduleKey, listCustomerKey } from "../../utils/global.js";
-import { parseDate } from "../../api/API.js";
+import {
+  parseDate,
+  parseDateToString,
+  prettifyStringDate
+} from "../../api/API.js";
 import { m3 } from "../../utils/message.js";
 
 export default class HomeScreen extends Component {
@@ -195,7 +199,10 @@ export default class HomeScreen extends Component {
         {
           text: "OK",
           style: "cancel",
-          onPress: () => this.deleteData(item)
+          onPress: () => {
+            this.deleteData(item);
+            this.endUpdate();
+          }
         }
       ],
       { cancelable: c }
@@ -210,7 +217,9 @@ export default class HomeScreen extends Component {
     let ref = firebase.database().ref("schedule");
     let sKey = item.date + item.id;
     ref.child(sKey).remove();
+  }
 
+  endUpdate() {
     //refresh data
     this.setState({ listAllScheduleDisplay: [] });
     this.onRefresh();
@@ -221,7 +230,7 @@ export default class HomeScreen extends Component {
     let data = this.state.listAllCustomer.find(
       x => (x.key === undefined ? x.name === item.id : x.key === item.id)
     );
-    if (data.key !== null) {
+    if (typeof data.key !== undefined) {
       this.props.navigation.navigate("Detail", {
         hasKey: true,
         val: data
@@ -233,6 +242,22 @@ export default class HomeScreen extends Component {
     });
   }
 
+  clearPassSchedule() {
+    let current = parseDateToString(new Date());
+
+    if (this.state.listAllScheduleDisplay.length > 0) {
+      let data = this.state.listAllScheduleDisplay;
+      let result = [];
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].title.localeCompare(current) < 0) {
+          this.deleteData(data[i]);
+        }
+      }
+
+      this.endUpdate();
+    }
+  }
+
   render() {
     return (
       <Container>
@@ -241,7 +266,15 @@ export default class HomeScreen extends Component {
           <Body>
             <Title style={styles.appHeaderFont}>Lịch hẹn</Title>
           </Body>
-          <Right />
+          <Right>
+            <Button transparent onPress={() => this.clearPassSchedule()}>
+              <Icon
+                type="MaterialCommunityIcons"
+                name="notification-clear-all"
+                style={styles.appHeaderIcon}
+              />
+            </Button>
+          </Right>
         </Header>
         <Content
           padder

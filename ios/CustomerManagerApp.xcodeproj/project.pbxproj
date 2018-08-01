@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -36,6 +37,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* CustomerManagerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CustomerManagerAppTests.m */; };
+		2DE5C203BF914D90AE551524 /* libSendSMS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 089D736D1A8B4B02A8465210 /* libSendSMS.a */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		516E174A6CC74DD9847FE465 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A465EF43A83E4A76B1A8F8F4 /* MaterialCommunityIcons.ttf */; };
 		57063D46763749B59112A67C /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A66A9FF14E9405B9DABF269 /* Roboto_medium.ttf */; };
@@ -56,7 +58,6 @@
 		DBFF5990F9B04C5885684EE4 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69463F070BC14438874BC24F /* EvilIcons.ttf */; };
 		E3734ED520E726DB00B8DD46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3734EAF20E726DB00B8DD46 /* GoogleService-Info.plist */; };
 		F5250DA32E23472EAC91E2F1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC013B91FFA64630BBFED580 /* SimpleLineIcons.ttf */; };
-		2DE5C203BF914D90AE551524 /* libSendSMS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 089D736D1A8B4B02A8465210 /* libSendSMS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -340,6 +341,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFirebase;
 		};
+		E34DF2B72111EA970069E9AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC3CE1E803934D8FAC62CC04 /* SendSMS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95688E1A1D38251600F72D63;
+			remoteInfo = SendSMS;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -352,6 +360,7 @@
 		00E356EE1AD99517003FC87E /* CustomerManagerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomerManagerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CustomerManagerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerManagerAppTests.m; sourceTree = "<group>"; };
+		089D736D1A8B4B02A8465210 /* libSendSMS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSendSMS.a; sourceTree = "<group>"; };
 		0BB0227776E0957C8C7DB588 /* Pods-CustomerManagerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomerManagerApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CustomerManagerApp/Pods-CustomerManagerApp.release.xcconfig"; sourceTree = "<group>"; };
 		0E6AB06BE0D542229AEAD91D /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -386,6 +395,7 @@
 		AE8EB7E02E038BFFAD2202B8 /* Pods-CustomerManagerApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomerManagerApp-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-CustomerManagerApp-tvOS/Pods-CustomerManagerApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		B63047B6EF5D42D88CE96B2F /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		C9F004CB00524732B9983B99 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		CC3CE1E803934D8FAC62CC04 /* SendSMS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SendSMS.xcodeproj; path = "../node_modules/react-native-sms/SendSMS.xcodeproj"; sourceTree = "<group>"; };
 		D11A658A04914AE29A257A71 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		D934C642AD53451F9AD08EED /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		DC19A7B4883F41C1A58BFCD6 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -397,8 +407,6 @@
 		FC013B91FFA64630BBFED580 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		FD57414F0F3E4AE084C27FCC /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		FDE7135C5C6A454FBC35C9B2 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
-		CC3CE1E803934D8FAC62CC04 /* SendSMS.xcodeproj */ = {isa = PBXFileReference; name = "SendSMS.xcodeproj"; path = "../node_modules/react-native-sms/SendSMS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		089D736D1A8B4B02A8465210 /* libSendSMS.a */ = {isa = PBXFileReference; name = "libSendSMS.a"; path = "libSendSMS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -715,6 +723,7 @@
 			isa = PBXGroup;
 			children = (
 				0E6AB06BE0D542229AEAD91D /* libRNFirebase.a */,
+				089D736D1A8B4B02A8465210 /* libSendSMS.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -723,6 +732,14 @@
 			isa = PBXGroup;
 			children = (
 				E34BF39B20E72B560028123A /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E34DF2B42111EA970069E9AC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E34DF2B82111EA970069E9AC /* libSendSMS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -899,6 +916,10 @@
 				{
 					ProductGroup = E34BF39720E72B560028123A /* Products */;
 					ProjectRef = FB5C847EBF3B46649851BF98 /* RNFirebase.xcodeproj */;
+				},
+				{
+					ProductGroup = E34DF2B42111EA970069E9AC /* Products */;
+					ProjectRef = CC3CE1E803934D8FAC62CC04 /* SendSMS.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1176,6 +1197,13 @@
 			fileType = archive.ar;
 			path = libRNFirebase.a;
 			remoteRef = E34BF39A20E72B560028123A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E34DF2B82111EA970069E9AC /* libSendSMS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSendSMS.a;
+			remoteRef = E34DF2B72111EA970069E9AC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

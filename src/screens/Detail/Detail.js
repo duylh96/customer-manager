@@ -23,6 +23,8 @@ import {
 } from "native-base";
 import { styles } from "../../styles/Styles.js";
 import call from "react-native-phone-call";
+import DialogInput from "react-native-dialog-input";
+import SendSMS from "react-native-sms";
 
 export default class Detail extends Component {
   constructor(props) {
@@ -30,7 +32,8 @@ export default class Detail extends Component {
     this.state = {
       active: false,
       data: {},
-      needRefresh: false
+      needRefresh: false,
+      isDialogVisible: false
     };
   }
 
@@ -53,6 +56,36 @@ export default class Detail extends Component {
 
       call(args).catch(console.error);
     }
+  }
+
+  sendInput(inputText) {
+    SendSMS.send(
+      {
+        body: inputText,
+        recipients: [this.state.data.phone],
+        successTypes: ["sent", "queued"]
+      },
+      (completed, cancelled, error) => {
+        console.log(
+          "SMS Callback: completed: " +
+            completed +
+            " cancelled: " +
+            cancelled +
+            "error: " +
+            error
+        );
+      }
+    );
+    this.showDialog(false);
+  }
+
+  showDialog(show) {
+    if (show === true) {
+      if (this.state.data.phone.length < 10 || this.state.data.phone === "0") {
+        return false;
+      }
+    }
+    this.setState({ isDialogVisible: show });
   }
 
   render() {
@@ -79,6 +112,19 @@ export default class Detail extends Component {
           <Right />
         </Header>
         <View style={{ flex: 1 }}>
+          <DialogInput
+            isDialogVisible={this.state.isDialogVisible}
+            title={"Tin nhắn nhanh"}
+            hintInput={"..."}
+            submitInput={inputText => {
+              this.sendInput(inputText);
+            }}
+            closeDialog={() => {
+              this.showDialog(false);
+            }}
+            cancelText={"Huỷ"}
+            submitText={"Gửi"}
+          />
           <Content padder maximumZoomScale={5} minimumZoomScale={1}>
             <Text style={styles.detailItemFont}>
               {this.state.data.description}
@@ -104,7 +150,10 @@ export default class Detail extends Component {
             >
               <Icon name="logo-whatsapp" />
             </Button>
-            <Button style={{ backgroundColor: "#3B5998" }}>
+            <Button
+              style={{ backgroundColor: "#3B5998" }}
+              onPress={() => this.showDialog(true)}
+            >
               <Icon type="MaterialIcons" name="message" />
             </Button>
             <Button
